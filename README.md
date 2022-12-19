@@ -24,6 +24,6 @@ npm run test
 
 /health : Show if services is run
 
-/config : Show all the configs
+/config : Show all available configs
 
 /config/{KEY} : Fetch the exact value of defined key

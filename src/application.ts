@@ -1,9 +1,10 @@
 import express from "express";
 import { Container } from "inversify";
-import { InversifyExpressServer } from "inversify-express-utils";
+import { InversifyExpressServer, next } from "inversify-express-utils";
 import { ApplicationAbstract } from "./abstracts/application.abstarct";
 import ConfigService from "./services/configs/config.service";
 import LoggerService from "./services/logger.service";
+import { Request, Response, NextFunction } from "express";
 
 import "./controllers";
 import { ConfigServiceFromAWS } from "./services/configs/libs/config-from-aws.service";
@@ -23,6 +24,14 @@ export class Application extends ApplicationAbstract {
 
   async setup() {
     const server = new InversifyExpressServer(this.container);
+
+    server.setErrorConfig((app) => {
+      // can be improve by creating HTTPExecption Class
+      app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+        res.sendStatus(400).json({ error });
+      });
+      next();
+    });
 
     server.setConfig((app) => {
       app.use(express.json());
