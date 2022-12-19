@@ -21,10 +21,11 @@ export default class ConfigService {
     this.appConfiguration = _appConfiguration;
 
     this.localConfigService = new ConfigServiceFromLocal(
-      _appConfiguration.applicationConfiguration.localPathConfig
+      _appConfiguration.app.localPathConfig
     );
   }
   async fetchConfigByKey(key: string) {
+    this.loggerService.debug("fetchConfigByKey Called");
     this.localConfigService.connect();
     await this.remoteConfigService.connect();
     let result = await this.remoteConfigService.getByKey(key);
@@ -35,6 +36,9 @@ export default class ConfigService {
   }
 
   async fetchConfig() {
+    this.loggerService.debug("fetchConfig Called");
+    // depend on business decision, it can connect in constractuction, but in this case
+    // we want to be sure that each time we are getting the fresh lists of configs
     this.localConfigService.connect();
     await this.remoteConfigService.connect();
     let result = await this.remoteConfigService.get();

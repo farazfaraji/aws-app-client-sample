@@ -28,7 +28,8 @@ export class Application extends ApplicationAbstract {
     server.setErrorConfig((app) => {
       // can be improve by creating HTTPExecption Class
       app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-        res.sendStatus(400).json({ error });
+        console.error(error);
+        return res.sendStatus(400);
       });
       next();
     });
@@ -39,7 +40,7 @@ export class Application extends ApplicationAbstract {
 
     const app = server.build();
 
-    const port = configuration.applicationConfiguration.port;
+    const port = configuration.app.port;
 
     app.listen(port, () => {
       console.log(`🎉 [server]: Server is running at http://localhost:${port}`);

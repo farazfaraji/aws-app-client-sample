@@ -5,17 +5,20 @@ import {
   StartConfigurationSessionCommand,
 } from "@aws-sdk/client-appconfigdata";
 import * as flat from "flat";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 
 import { RemoteConfigAbstract } from "../../../abstracts/remote-config.abstract";
+import { Symbols } from "../../../symbols";
 
 @injectable()
 export class ConfigServiceFromAWS extends RemoteConfigAbstract {
   private token: string | undefined;
   private awsClient: AppConfigDataClient | undefined;
+  private readonly appConfiguration: any;
 
-  constructor() {
+  constructor(@inject(Symbols.AppConfiguration) _appConfiguration: any) {
     super();
+    this.appConfiguration = _appConfiguration;
   }
 
   async connect(): Promise<boolean> {
@@ -90,10 +93,11 @@ export class ConfigServiceFromAWS extends RemoteConfigAbstract {
   private async getToken(): Promise<string> {
     try {
       const getSession = new StartConfigurationSessionCommand({
-        ApplicationIdentifier: process.env.APP_CONFIG_APP_IDENTIFIER,
+        ApplicationIdentifier: this.appConfiguration.app.AppConfigAppIdentifier,
         ConfigurationProfileIdentifier:
-          process.env.APP_CONFIG_CONFIG_PROFILE_IDENTIFIER,
-        EnvironmentIdentifier: process.env.APP_CONFIG_ENVIRONMENT_IDENTIFIER,
+          this.appConfiguration.app.AppConfigConfigProfileIdentifier,
+        EnvironmentIdentifier:
+          this.appConfiguration.app.AppConfigEnvironmentIdentifier,
       });
       if (this.awsClient) {
         const sessionToken = await this.awsClient.send(getSession);
