@@ -11,5 +11,5 @@ export abstract class ApplicationAbstract {
   }
 
   abstract configureApplication(container: Container): void;
-  abstract setup(): Promise<void> | void;
+  abstract setup(): Promise<Express.Application> | Express.Application;
 }

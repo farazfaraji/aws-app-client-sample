@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-interface ApplicationConfigurationInterface {
+export interface ApplicationConfigurationInterface {
   port: number;
   localPathConfig: string;
   AppConfigAppIdentifier: string;
@@ -21,6 +21,6 @@ const app: ApplicationConfigurationInterface = {
 };
 
 // I couldn't fix the 'any' type
-export const configuration: any = {
+export const configuration = {
   app,
 };

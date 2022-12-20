@@ -22,7 +22,7 @@ export class Application extends ApplicationAbstract {
       .to(ConfigServiceFromAWS);
   }
 
-  async setup() {
+  async setup(): Promise<Express.Application> {
     const server = new InversifyExpressServer(this.container);
 
     server.setErrorConfig((app) => {
@@ -45,5 +45,7 @@ export class Application extends ApplicationAbstract {
     app.listen(port, () => {
       console.log(`🎉 [server]: Server is running at http://localhost:${port}`);
     });
+
+    return app;
   }
 }
