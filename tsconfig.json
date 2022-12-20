@@ -106,6 +106,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["./.env", "src", "src/assets"],
-  "exclude": ["node_modules"]
+  "include": ["./.env", "src", "src/assets", "tests"],
+  "exclude": ["node_modules", "tests"]
 }

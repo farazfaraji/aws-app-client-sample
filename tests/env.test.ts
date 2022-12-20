@@ -1,7 +1,7 @@
 import {
-  ApplicationConfigurationInterface,
   configuration,
-} from "../configuration/configuration";
+  ApplicationConfigurationInterface,
+} from "../src/configuration/configuration";
 
 describe("Main file", () => {
   test("Check if App variable file loaded successfully", () => {

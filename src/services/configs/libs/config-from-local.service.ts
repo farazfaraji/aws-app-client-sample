@@ -8,7 +8,11 @@ export class ConfigServiceFromLocal extends RemoteConfigAbstract {
   private localConfig: any;
   constructor(_configPath: string) {
     super();
-    this.configPath = path.resolve(_configPath);
+    if (fs.existsSync(_configPath)) {
+      this.configPath = path.resolve(_configPath);
+    } else {
+      throw new Error("local config file not found");
+    }
   }
   connect(): boolean {
     if (!fs.existsSync(this.configPath))

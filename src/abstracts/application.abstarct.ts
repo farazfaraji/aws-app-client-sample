@@ -7,7 +7,6 @@ export abstract class ApplicationAbstract {
     this.container = new Container(options);
 
     this.configureApplication(this.container);
-    this.setup();
   }
 
   abstract configureApplication(container: Container): void;

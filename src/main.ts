@@ -1,10 +1,11 @@
-import "reflect-metadata";
 import { Application } from "./application";
 
 export function bootstrap() {
-  new Application({
+  const app = new Application({
     defaultScope: "Singleton",
   });
+
+  app.setup();
 }
 
 bootstrap();

@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import express from "express";
 import { Container } from "inversify";
 import { InversifyExpressServer, next } from "inversify-express-utils";
@@ -23,6 +25,7 @@ export class Application extends ApplicationAbstract {
   }
 
   async setup(): Promise<Express.Application> {
+    console.log("Starting Server ...");
     const server = new InversifyExpressServer(this.container);
 
     server.setErrorConfig((app) => {
